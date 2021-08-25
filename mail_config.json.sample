@@ -1,0 +1,8 @@
+{
+  "NOT_OPEN_TEXT": "Actuellement la whitelist est complète",
+  "MAIL_API_KEY": "****",
+  "MAIL_API_SECRET": "***",
+  "MAIL_RECIPIENT_EMAIL": "***",
+  "MAIL_SENDER_EMAIL": "***",
+  "URL_TO_CHECK": "http://panel.failyv.com/whitelist/index.php"
+}
