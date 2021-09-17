@@ -1,33 +1,38 @@
 # -*- coding: utf8 -*-
-import time
 import requests
 import json
 from bs4 import BeautifulSoup
 from mailjet_rest import Client
+from datetime import datetime
+
 
 def main_loop():
-    while True:
-        configFileHandler = open('mail_config.json', encoding='utf-8')
-        config = json.load(configFileHandler)
-        configFileHandler.close()
+    configFileHandler = open('mail_config.json', encoding='utf-8')
+    config = json.load(configFileHandler)
+    configFileHandler.close()
 
-        whiteListRequest = requests.get(config['URL_TO_CHECK'])
-        soup = BeautifulSoup(whiteListRequest.content, 'html.parser')
-        signinElement = soup.find(class_="signin")
+    whiteListRequest = requests.get(config['URL_TO_CHECK'])
+    soup = BeautifulSoup(whiteListRequest.content, 'html.parser')
+    signinElement = soup.find(class_="signin")
+    today = datetime.now()
 
-        if signinElement.text.find(config['NOT_OPEN_TEXT']) == -1:
-            mailjet = Client(auth=(config['MAIL_API_KEY'], config['MAIL_API_SECRET']))
-            data = {
-                'Recipients': [{"Email": config['MAIL_RECIPIENT_EMAIL']}],
-                'FromEmail': config['MAIL_SENDER_EMAIL'],
-                'Subject': 'DES PLACES POUR FAILY V !',
-                'Text-part': 'GO GO GO !',
-                'Html-part': '<p>GO GO GO !</p>',
-            }
-            result = mailjet.send.create(data=data)
-            print(result.status_code)
-            print(result.json())
-        time.sleep(20)
+    if signinElement.text.find(config['NOT_OPEN_TEXT']) == -1:
+        mailjet = Client(auth=(config['MAIL_API_KEY'], config['MAIL_API_SECRET']))
+        data = {
+            'Recipients': [{"Email": config['MAIL_RECIPIENT_EMAIL']}],
+            'FromEmail': config['MAIL_SENDER_EMAIL'],
+            'Subject': 'DES PLACES POUR FAILY V !',
+            'Text-part': 'GO GO GO !',
+            'Html-part': '<a href="' + config['URL_TO_CHECK'] + '">GO GO GO !</p> ',
+        }
+        result = mailjet.send.create(data=data)
+
+        with open('entry.log', 'a') as the_file:
+            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] OPENNNNNNNNNNNNNNN')
+    else:
+        with open('entry.log', 'a') as the_file:
+            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] Close')
+
 
 if __name__ == '__main__':
     main_loop()
