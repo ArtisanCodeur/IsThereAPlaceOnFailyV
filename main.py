@@ -28,10 +28,10 @@ def main_loop():
         result = mailjet.send.create(data=data)
 
         with open('entry.log', 'a') as the_file:
-            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] OPENNNNNNNNNNNNNNN')
+            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] OPENNNNNNNNNNNNNNN\n')
     else:
         with open('entry.log', 'a') as the_file:
-            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] Close')
+            the_file.write('[' + today.strftime("%d/%m/%Y %H:%M:%S") + '] Close\n')
 
 
 if __name__ == '__main__':
