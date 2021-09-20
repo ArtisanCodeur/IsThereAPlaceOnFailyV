@@ -8,7 +8,7 @@ from pathlib import Path
 
 def main_loop():
     base_path = Path(__file__).parent
-    file_path = (base_path / "mail_config.csv").resolve()
+    file_path = (base_path / "mail_config.json").resolve()
     configFileHandler = open(file_path, encoding='utf-8')
     config = json.load(configFileHandler)
     configFileHandler.close()
