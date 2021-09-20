@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 def main_loop():
-    configFileHandler = open('mail_config.json', encoding='utf-8')
+    configFileHandler = open('./mail_config.json', encoding='utf-8')
     config = json.load(configFileHandler)
     configFileHandler.close()
 
