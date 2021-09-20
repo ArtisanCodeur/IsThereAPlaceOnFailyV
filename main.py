@@ -4,10 +4,12 @@ import json
 from bs4 import BeautifulSoup
 from mailjet_rest import Client
 from datetime import datetime
-
+from pathlib import Path
 
 def main_loop():
-    configFileHandler = open('./mail_config.json', encoding='utf-8')
+    base_path = Path(__file__).parent
+    file_path = (base_path / "mail_config.csv").resolve()
+    configFileHandler = open(file_path, encoding='utf-8')
     config = json.load(configFileHandler)
     configFileHandler.close()
 
